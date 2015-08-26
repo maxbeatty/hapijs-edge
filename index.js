@@ -1,99 +1,48 @@
-var Async = require('async');
-var Bell = require('bell');
-var Blipp = require('blipp');
+// Load modules
+
+var Glue = require('glue');
 var Hapi = require('hapi');
-var HapiAuthCookie = require('hapi-auth-cookie');
-var Hoek = require('hoek');
-var Api = require('./api');
-var Authentication = require('./authentication');
-var Controllers = require('./controllers');
-var Models = require('./models');
-var Routes = require('./routes');
+
+// Internals
 
 var internals = {
-    servers: {
-        http: {
-            port: 8080,
-            host: '0.0.0.0',
-            labels: ['http']
-        },
-        api: {
-            port: 8088,
-            host: '0.0.0.0',
-            labels: ['api']
-        }
-    },
-    options: {
-        files: {
-            relativeTo: __dirname
+    manifest: {
+        connections: [
+            {
+                port: 8080,
+                labels: ['http']
+            }, {
+                port: 8088,
+                labels: ['api']
+            }
+        ],
+        plugins: {
+            bell: [{ 'select': 'http' }],
+            blipp: [{}],
+            'hapi-auth-cookie': [{ 'select': 'http' }],
+            './authentication': [{ 'select': 'http' }],
+            './controllers': [{ 'select': ['http', 'api'] }],
+            './models': [{ 'select': ['http', 'api'] }],
+            './routes': [{ 'select': ['http'] }],
+            './api': [{ 'select': ['api'] }],
+            good: {
+                opsInterval: 5000,
+                reporters: [{
+                    'reporter': 'good-console',
+                    'events': { 'ops': '*', 'log': '*' }
+                }]
+            }
         }
     }
 };
 
-exports.init = function (callback) {
+Glue.compose(internals.manifest, { relativeTo: __dirname }, function (err, server) {
 
-    var server = new Hapi.Server();
-    server.connection(internals.servers.http);
-    server.connection(internals.servers.api);
+    if (err) {
+        console.log('server.register err:', err);
+    }
+    server.start(function () {
 
-    server.path(internals.options.files.relativeTo);
-
-    server.on('request-error', function (request, response) {
-
-        console.log('request-error:');
-        console.dir(response);
+        console.log('server started');
     });
-
-    var registerHttpPlugins = function (next) {
-
-        server.register([
-            Bell,
-            Blipp,
-            HapiAuthCookie,
-            Authentication,
-            Controllers,
-            Models,
-            Routes
-        ],
-        { select: 'http' },
-        function (err) {
-
-            return next(err);
-        });
-    };
-
-    var registerApiPlugins = function (next) {
-
-        server.register([
-            Blipp,
-            Controllers,
-            Models,
-            Api
-        ],
-        { select: 'api' },
-        function (err) {
-
-            return next(err);
-        }
-        );
-    };
-
-    Async.auto({
-        http: registerApiPlugins,
-        api: registerApiPlugins
-    }, function (err, data) {
-
-        if (err) {
-            console.log('server.register err:', err);
-            return callback(err);
-        }
-
-        server.start(function () {
-
-            return callback(null, server);
-        });
-    });
-
-};
-
-exports.init(Hoek.ignore);
+});
