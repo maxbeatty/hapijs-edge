@@ -1,0 +1,22 @@
+{
+  "name": "hapi-edge",
+  "version": "1.0.0",
+  "description": "hapi Edge book",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "hapi"
+  ],
+  "author": "Max Beatty",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^9.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^1.2.1",
+    "eslint-config-hapi": "^1.0.1",
+    "eslint-plugin-hapi": "^1.2.0"
+  }
+}
