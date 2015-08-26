@@ -4,7 +4,7 @@
   "description": "hapi Edge book",
   "main": "index.js",
   "scripts": {
-    "start": "rejoice -c example.json -p `pwd`"
+    "start": "confidence -c confidence.json --filter.env=$NODE_ENV > config.json && rejoice -c config.json -p `pwd`"
   },
   "keywords": [
     "hapi"
@@ -13,18 +13,19 @@
   "license": "ISC",
   "dependencies": {
     "bell": "^5.1.0",
-    "blipp": "^2.3.0",
-    "glue": "^2.2.0",
+    "confidence": "^1.2.0",
     "good": "^6.3.0",
-    "good-console": "^5.0.3",
+    "good-file": "^5.0.1",
     "hapi": "^9.0.3",
     "hapi-auth-cookie": "^3.1.0",
     "rejoice": "^2.0.1"
   },
   "devDependencies": {
+    "blipp": "^2.3.0",
     "eslint": "^1.2.1",
     "eslint-config-hapi": "^1.0.1",
-    "eslint-plugin-hapi": "^1.2.0"
+    "eslint-plugin-hapi": "^1.2.0",
+    "good-console": "^5.0.3"
   },
   "private": true
 }
