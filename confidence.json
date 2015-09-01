@@ -12,6 +12,7 @@
     "plugins": {
         "$filter": env,
         "$base": {
+            "vision": [{ "select": "http" }],
             "bell": [{ "select": "http" }],
             "hapi-auth-cookie": [{ "select": "http" }],
             "./authentication": [{ "select": "http" }],
@@ -21,7 +22,8 @@
             "./api": [{ "select": ["api"] }],
             "good": {
                 "opsInterval": 5000,
-            }
+            },
+            "poop": {}
         },
         "dev": {
             "blipp": [{}],
@@ -30,7 +32,10 @@
                     "reporter": "good-console",
                     "events": { "ops": "*", "log": "*" }
                 }]
-            }
+            },
+            "inert": [{}],
+            "tv": [{ "select": "http" }],
+            "reptile": { "localOnly": false }
         },
         "prod": {
             "good": {
@@ -43,7 +48,8 @@
                     "events": { "ops": "*" },
                     "config": "/path/to/ops.log"
                 }]
-            }
+            },
+            "reptile": {}
         }
     },
 }

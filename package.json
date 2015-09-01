@@ -19,7 +19,10 @@
     "good-file": "^5.0.1",
     "hapi": "^9.0.3",
     "hapi-auth-cookie": "^3.1.0",
-    "rejoice": "^2.0.1"
+    "poop": "^1.2.5",
+    "rejoice": "^2.0.1",
+    "reptile": "^1.2.0",
+    "vision": "^3.0.0"
   },
   "devDependencies": {
     "blipp": "^2.3.0",
@@ -28,7 +31,9 @@
     "eslint-config-hapi": "^1.0.1",
     "eslint-plugin-hapi": "^1.2.0",
     "good-console": "^5.0.3",
-    "lab": "^5.15.2"
+    "inert": "^3.0.1",
+    "lab": "^5.15.2",
+    "tv": "^4.1.1"
   },
   "private": true
 }
